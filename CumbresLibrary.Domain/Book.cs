@@ -34,7 +34,7 @@ namespace CumbresLibrary.Domain
         public string Signature { get; set; }
 
         [Display(Name = "Paginas")]
-        [MaxLength(4, ErrorMessage = "The field {0} only can contains a maximum of {1} characters lenght.")]
+        //[MaxLength(4, ErrorMessage = "The field {0} only can contains a maximum of {1} characters lenght.")]
         public int Paginas { get; set; }
 
         [Display(Name = "Edition")]
@@ -42,7 +42,7 @@ namespace CumbresLibrary.Domain
         public string Edition { get; set; }
 
         [Display(Name = "Year")]
-        [MaxLength(4, ErrorMessage = "The field {0} only can contains a maximum of {1} characters lenght.")]
+       // [MaxLength(4, ErrorMessage = "The field {0} only can contains a maximum of {1} characters lenght.")]
         public int Year { get; set; }
 
         [Display(Name = "Country")]

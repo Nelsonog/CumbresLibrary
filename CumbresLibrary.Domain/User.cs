@@ -57,7 +57,7 @@ namespace CumbresLibrary.Domain
         public string Password { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Operation> Users { get; set; }
+        public virtual ICollection<Operation> Clients { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Operation> Receptors { get; set; }

@@ -16,10 +16,10 @@ namespace CumbresLibrary.Domain
         public int ItemBookId { get; set; }
 
 
-        [Required (ErrorMessage ="The fiel {0} is required.")]
-        [MaxLength(5, ErrorMessage ="The fiel {0} only can contains a maximum of {1} characters lenght.")]
+       // [Required (ErrorMessage ="The fiel {0} is required.")]
+        //[MaxLength(5, ErrorMessage ="The fiel {0} only can contains a maximum of {1} characters lenght.")]
         [Index("Book_Code_Index", IsUnique=true)]
-        public int Book_Code { get; set; }
+        public string Book_Code { get; set; }
 
 
 

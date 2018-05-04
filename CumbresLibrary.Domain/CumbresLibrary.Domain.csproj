@@ -58,6 +58,7 @@
     <Compile Include="Editorial.cs" />
     <Compile Include="ItemBook.cs" />
     <Compile Include="Operation.cs" />
+    <Compile Include="OperationsMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusItemBook.cs" />
     <Compile Include="User.cs" />

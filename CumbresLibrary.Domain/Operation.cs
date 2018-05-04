@@ -17,9 +17,15 @@ namespace CumbresLibrary.Domain
         [JsonIgnore]
         public virtual ItemBook ItemBook { get; set; }
 
-        //public int UserId { get; set; }
+
+        [Display(Name = "Client")]
+        public int ClientId { get; set; }
+
+        [Display(Name = "Receptor")]
+        public int ReceptorId { get; set; }
+
         [JsonIgnore]
-        public virtual User User { get; set; }
+        public virtual User Client { get; set; }
 
         [JsonIgnore]
         public virtual User Receptor { get; set; }
@@ -48,7 +54,7 @@ namespace CumbresLibrary.Domain
 
 
         [Display(Name = "Reserved")]
-        [MaxLength(1, ErrorMessage = "The field {0} only can contains a maximum of {1} characters lenght.")]
+        //[MaxLength(1, ErrorMessage = "The field {0} only can contains a maximum of {1} characters lenght.")]
         public int Reserved { get; set; }
 
 

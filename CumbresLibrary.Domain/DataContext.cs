@@ -16,21 +16,21 @@ namespace CumbresLibrary.Domain
 
         public DbSet<UserType> UserTypes { get; set; }
 
-        //public DbSet<Team> Teams { get; set; }
+        public DbSet<StatusItemBook> StatusItemBooks { get; set; }
 
-        //public DbSet<Group> Groups { get; set; }
+        public DbSet<Operation> Operations { get; set; }
 
-        //public DbSet<GroupTeam> GroupTeams { get; set; }
+        public DbSet<ItemBook> ItemBook { get; set; }
 
-        //public DbSet<StatusMatch> StatusMatches { get; set; }
+        public DbSet<Editorial> Editorials { get; set; }
 
-        //public DbSet<Match> Matches { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-        //public DbSet<BoardStatus> BoardStatus { get; set; }
+        public DbSet<Book> Books { get; set; }
 
-        //public DbSet<Board> Boards { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
-        //public DbSet<Prediction> Predictions { get; set; }
+       // public DbSet<Prediction> Predictions { get; set; }
         #endregion
 
         #region Constructors
@@ -43,7 +43,7 @@ namespace CumbresLibrary.Domain
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-           // modelBuilder.Configurations.Add(new MatchesMap());
+            modelBuilder.Configurations.Add(new OperationsMap());
         }
         #endregion
     }

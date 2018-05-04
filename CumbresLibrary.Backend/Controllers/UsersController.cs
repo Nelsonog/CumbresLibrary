@@ -13,108 +13,130 @@ namespace CumbresLibrary.Backend.Controllers
     using System.Web;
     using System.Web.Mvc;
     using CumbresLibrary.Domain;
+    using CumbresLibrary.Backend.Models;
+    using CumbresLibrary.Backend.Helpers;
 
-        public class UserTypesController : Controller
+        public class UsersController : Controller
     {
         private DataContext db = new DataContext();
 
-        // GET: UserTypes
+        // GET: Users
         public async Task<ActionResult> Index()
         {
-            return View(await db.UserTypes.ToListAsync());
+            var users = db.Users.Include(u => u.UserType);
+            return View(await users.ToListAsync());
         }
 
-        // GET: UserTypes/Details/5
+        // GET: Users/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserType userType = await db.UserTypes.FindAsync(id);
-            if (userType == null)
+            User user = await db.Users.FindAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(userType);
+            return View(user);
         }
 
-        // GET: UserTypes/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
+            ViewBag.UserTypeId = new SelectList(db.UserTypes, "UserTypeId", "Name");
             return View();
         }
 
-        // POST: UserTypes/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "UserTypeId,Name")] UserType userType)
+        public async Task<ActionResult> Create(UserView view)
         {
             if (ModelState.IsValid)
             {
-                db.UserTypes.Add(userType);
+                var user = this.ToUser(view);
+                db.Users.Add(user);
                 await db.SaveChangesAsync();
+                UsersHelper.CreateUserASP(view.Email, "User", view.Password);
                 return RedirectToAction("Index");
             }
 
-            return View(userType);
+            ViewBag.UserTypeId = new SelectList(db.UserTypes, "UserTypeId", "Name", view.UserTypeId);
+            return View(view);
         }
 
-        // GET: UserTypes/Edit/5
+        private User ToUser(Models.UserView view)
+        {
+            return new User
+            {
+                Email = view.Email,
+                FirstName = view.FirstName,
+                ImagePath = view.ImagePath,
+                LastName = view.LastName,
+                Telephone = view.Telephone,
+                UserId = view.UserId,
+            };
+        }
+
+        // GET: Users/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserType userType = await db.UserTypes.FindAsync(id);
-            if (userType == null)
+            User user = await db.Users.FindAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(userType);
+            ViewBag.UserTypeId = new SelectList(db.UserTypes, "UserTypeId", "Name", user.UserTypeId);
+            return View(user);
         }
 
-        // POST: UserTypes/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "UserTypeId,Name")] UserType userType)
+        public async Task<ActionResult> Edit([Bind(Include = "UserId,FirstName,LastName,Email,Code,Telephone,ImagePath,UserTypeId")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(userType).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(userType);
+            ViewBag.UserTypeId = new SelectList(db.UserTypes, "UserTypeId", "Name", user.UserTypeId);
+            return View(user);
         }
 
-        // GET: UserTypes/Delete/5
+        // GET: Users/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserType userType = await db.UserTypes.FindAsync(id);
-            if (userType == null)
+            User user = await db.Users.FindAsync(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(userType);
+            return View(user);
         }
 
-        // POST: UserTypes/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            UserType userType = await db.UserTypes.FindAsync(id);
-            db.UserTypes.Remove(userType);
+            User user = await db.Users.FindAsync(id);
+            db.Users.Remove(user);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
